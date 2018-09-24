@@ -17,7 +17,7 @@ args.option('-i, --inputExcelFile <inputExcelFile>', '\'File Localtion\' which c
 const inputExcelFile = path.resolve('.', args.inputExcelFile);
 const sheetName = args.sheetName;
 const outputDir = path.resolve('.', args.outputDir);
-const embedded = args.embedded;
+const embedded = JSON.parse(args.embedded);
 
 if (validationUtil(inputExcelFile, sheetName, outputDir)) {
   args.help();
