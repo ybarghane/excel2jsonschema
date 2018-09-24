@@ -21,16 +21,16 @@
     "xlsx",
     "Spreadsheet"
   ],
-  "main": "./lib/excel2jsonschema.js",
+  "main": "./src/excel2jsonschema.js",
   "scripts": {
-    "clean": "rimraf lib",
+    "clean": "rimraf src",
     "test": "mocha ./test/**/*spec.js",
-    "build": "npm run clean && babel src --out-dir lib",
+    "build": "npm run clean && babel src --out-dir src",
     "version": "npm version patch",
-    "x": "npm run build && node ./lib/excel2jsonschema.js"
+    "x": "npm run build && node ./src/excel2jsonschema.js"
   },
   "bin": {
-    "excel2jsonschema": "./lib/excel2jsonschema.js"
+    "excel2jsonschema": "./src/excel2jsonschema.js"
   },
   "dependencies": {
     "chalk": "^1.1.3",

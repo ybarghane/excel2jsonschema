@@ -10,7 +10,7 @@ const assert = require('assert');
 const primitiveTypes = ['boolean', 'integer', 'number', 'string', 'any'];
 jsonfile.spaces = 4;
   // TODO: add validations
-export default (inputExcelFile, sheetName, outputDir) => {
+module.exports = (inputExcelFile, sheetName, outputDir) => {
   assert(inputExcelFile, 'Please provide Input Excel Sheet location');
   assert(sheetName, 'Please provide Sheet Name');
   assert(outputDir, 'Please provide Output dir location');

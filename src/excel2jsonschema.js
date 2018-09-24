@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import generateJSONSchema from './generate-json-schema';
-import generateJSONExample from './generate-json-example';
-import validationUtil from './validationUtil';
+const generateJSONSchema = require('./generate-json-schema');
+const generateJSONExample = require('./generate-json-example');
+const validationUtil = require('./validationUtil');
 
 const args = require('commander');
 const path = require('path');

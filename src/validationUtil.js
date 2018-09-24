@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const XLSX = require('xlsx');
 
-export default (inputExcelFile, sheetName, outputDir) => {
+module.exports = (inputExcelFile, sheetName, outputDir) => {
   let invalidArgs = false;
 
   if (!isExcelFile(inputExcelFile, sheetName)) {

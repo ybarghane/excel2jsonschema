@@ -10,7 +10,7 @@ const assert = require('assert');
 const primitiveTypes = ['boolean', 'integer', 'number', 'string'];
 jsonfile.spaces = 4;
   // TODO: add validations
-export default (inputExcelFile, sheetName, outputDir, embedded) => {
+module.exports = (inputExcelFile, sheetName, outputDir, embedded) => {
   assert(inputExcelFile, 'Please provide Input Excel Sheet location');
   assert(sheetName, 'Please provide Sheet Name');
   assert(outputDir, 'Please provide Output dir location');
@@ -23,7 +23,7 @@ export default (inputExcelFile, sheetName, outputDir, embedded) => {
     .reject(value => value.Ignore)
     .groupBy(value => value.Name)
     .value();
-
+	
   modelInfo = _.chain(modelInfo)
     .mapValues((value, key) => ({
       $schema: 'http://json-schema.org/draft-04/schema#',
@@ -58,12 +58,12 @@ function processProperties(value, modelInfo, embedded) {
         default: value2[0].Default,
         format: value2[0].Format,
         pattern: value2[0].Pattern,
-        maximum: value2[0].Maximum,
-        minimum: value2[0].Minimum,
-        maxLength: value2[0].MaxLength,
-        minLength: value2[0].MinLength,
-        maxItems: value2[0].MaxItems,
-        minItems: value2[0].MinItems,
+        maximum: value2[0].Maximum != undefined ? parseInt(value2[0].Maximum, 10) : undefined,
+		minimum: value2[0].Minimum != undefined ? parseInt(value2[0].Minimum, 10) : undefined,
+		maxLength: value2[0].MaxLength != undefined ? parseInt(value2[0].MaxLength, 10) : undefined,
+		minLength: value2[0].MinLength != undefined ? parseInt(value2[0].MinLength, 10) : undefined,
+		maxItems: value2[0].MaxItems != undefined ? parseInt(value2[0].MaxItems, 10) : undefined,
+		minItems: value2[0].MinItems != undefined ? parseInt(value2[0].MinItems, 10) : undefined,
       };
     })
     .value();
@@ -93,6 +93,7 @@ function processArrayItems(value, modelInfo, embedded) {
     if (_.includes(primitiveTypes, _.lowerCase(value.Type))) {
       return {
         type: value.Type,
+		properties: processProperties(modelInfo[value.Type], modelInfo, embedded),
       };
     }
     if (embedded) {
@@ -102,7 +103,10 @@ function processArrayItems(value, modelInfo, embedded) {
         required: processRequiredFields(modelInfo[value.Type]),
       };
     }
-    return { $ref: `${_.kebabCase(value.Type)}.json#` };
+	
+    return {
+		$ref: `${_.kebabCase(value.Type)}.json#`,
+	};
   }
   return undefined;
 }
